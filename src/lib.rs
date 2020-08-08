@@ -1,9 +1,11 @@
 use wasm_bindgen::prelude::*;
 use js_sys;
 
-#[wasm_bindgen(inline_js = "export function console_log() { return console.log; }")]
+#[wasm_bindgen]
 extern "C" {
-    pub fn console_log() -> js_sys::Function;
+    pub type Console;
+    #[wasm_bindgen(getter = log, static_method_of = Console, js_class = console, js_name = console)]
+    pub fn log() -> js_sys::Function;
 }
 
 pub fn js_sys_array<I: IntoIterator<Item=T>, T: Into<JsValue>>(into_iter: I) -> js_sys::Array {
@@ -17,7 +19,7 @@ pub fn js_sys_array<I: IntoIterator<Item=T>, T: Into<JsValue>>(into_iter: I) -> 
 #[macro_export]
 macro_rules! log {
     ( $( $x:expr ),* ) => {
-        $crate::console_log().apply(
+        $crate::Console::log().apply(
             &JsValue::null(),
             &$crate::js_sys_array(&[$(
                 Into::<wasm_bindgen::JsValue>::into($x),
