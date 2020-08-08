@@ -6,7 +6,7 @@ extern "C" {
     pub fn console_log() -> js_sys::Function;
 }
 
-fn js_sys_array<I: IntoIterator<Item=T>, T: Into<JsValue>>(into_iter: I) -> js_sys::Array {
+pub fn js_sys_array<I: IntoIterator<Item=T>, T: Into<JsValue>>(into_iter: I) -> js_sys::Array {
     let js_arr = js_sys::Array::new();
     into_iter.into_iter().for_each(|x| {
         js_arr.push(&x.into());
@@ -19,7 +19,7 @@ macro_rules! log {
     ( $( $x:expr ),* ) => {
         $crate::console_log().apply(
             &JsValue::null(),
-            &js_sys_array(&[$(
+            &$crate::js_sys_array(&[$(
                 Into::<wasm_bindgen::JsValue>::into($x),
             )*])
         )
