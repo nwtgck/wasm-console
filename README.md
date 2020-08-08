@@ -12,7 +12,7 @@ wasm-console = { git = "https://github.com/nwtgck/wasm-console" }
 
 Here is an usage. The most important thing is that you can specify multiple values as the same as `console.log` in JavaScript.
 
-```rs
+```rust
 wasm_console::log!("Hi!", true, 1.3);
 ```
 
