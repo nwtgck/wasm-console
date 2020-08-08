@@ -9,14 +9,18 @@ extern "C" {
     pub fn log() -> js_sys::Function;
 }
 
+pub fn console_log_with_slice(args: &[JsValue]) -> Result<JsValue, JsValue> {
+    Console::log().apply(
+        &JsValue::null(),
+        &js_sys::Array::from_iter(args)
+    )
+}
+
 #[macro_export]
 macro_rules! log {
     ( $( $x:expr ),* ) => {
-        $crate::Console::log().apply(
-            &JsValue::null(),
-            &$crate::js_sys::Array::from_iter(&[$(
-                Into::<wasm_bindgen::JsValue>::into($x),
-            )*])
-        )
+        $crate::console_log_with_slice(&[$(
+            Into::<wasm_bindgen::JsValue>::into($x),
+        )*])
     };
 }
