@@ -17,3 +17,7 @@ wasm_console::log!("Hi!", true, 1.3);
 ```
 
 Any `x` which can be `JsValue::from(x)` can be specified the arguments.
+
+## Example
+Here is an example using wasm-console.
+- <https://github.com/nwtgck/wasm-console-example>
