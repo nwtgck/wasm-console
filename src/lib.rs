@@ -9,7 +9,8 @@ extern "C" {
     pub fn log() -> js_sys::Function;
 }
 
-pub fn console_log_with_slice(args: &[JsValue]) -> Result<JsValue, JsValue> {
+#[inline(always)]
+fn console_log_with_slice(args: &[JsValue]) -> Result<JsValue, JsValue> {
     Console::log().apply(
         &JsValue::null(),
         &js_sys::Array::from_iter(args)
