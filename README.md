@@ -1,5 +1,7 @@
 # wasm-console
-`console.log` in WebAssembly
+![CI](https://github.com/nwtgck/wasm-console/workflows/CI/badge.svg)
+
+`console.log()` in WebAssembly in the same way as JavaScript 
 
 ## Usage
 
