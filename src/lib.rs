@@ -25,39 +25,39 @@ pub mod __export {
     use wasm_bindgen::JsValue;
     use std::iter::FromIterator;
 
-    pub fn console_log(args: &[JsValue]) -> Result<JsValue, JsValue> {
+    pub fn console_log(args: &[JsValue]) {
         super::Console::log().apply(
             &JsValue::null(),
             &js_sys::Array::from_iter(args)
-        )
+        ).unwrap();
     }
 
-    pub fn console_debug(args: &[JsValue]) -> Result<JsValue, JsValue> {
+    pub fn console_debug(args: &[JsValue]) {
         super::Console::debug().apply(
             &JsValue::null(),
             &js_sys::Array::from_iter(args)
-        )
+        ).unwrap();
     }
 
-    pub fn console_info(args: &[JsValue]) -> Result<JsValue, JsValue> {
+    pub fn console_info(args: &[JsValue]) {
         super::Console::info().apply(
             &JsValue::null(),
             &js_sys::Array::from_iter(args)
-        )
+        ).unwrap();
     }
 
-    pub fn console_warn(args: &[JsValue]) -> Result<JsValue, JsValue> {
+    pub fn console_warn(args: &[JsValue]) {
         super::Console::warn().apply(
             &JsValue::null(),
             &js_sys::Array::from_iter(args)
-        )
+        ).unwrap();
     }
 
-    pub fn console_error(args: &[JsValue]) -> Result<JsValue, JsValue> {
+    pub fn console_error(args: &[JsValue]) {
         super::Console::error().apply(
             &JsValue::null(),
             &js_sys::Array::from_iter(args)
-        )
+        ).unwrap();
     }
 }
 
