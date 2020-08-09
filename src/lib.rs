@@ -1,25 +1,106 @@
 use wasm_bindgen::prelude::*;
 use js_sys;
-use std::iter::FromIterator;
 
 #[wasm_bindgen]
 extern "C" {
     pub type Console;
-    #[wasm_bindgen(getter = log, static_method_of = Console, js_class = console, js_name = console)]
+
+    #[wasm_bindgen(static_method_of = Console, js_class = console, js_name = console, getter = log)]
     pub fn log() -> js_sys::Function;
+
+    #[wasm_bindgen(static_method_of = Console, js_class = console, js_name = console, getter = debug)]
+    pub fn debug() -> js_sys::Function;
+
+    #[wasm_bindgen(static_method_of = Console, js_class = console, js_name = console, getter = info)]
+    pub fn info() -> js_sys::Function;
+
+    #[wasm_bindgen(static_method_of = Console, js_class = console, js_name = console, getter = warn)]
+    pub fn warn() -> js_sys::Function;
+
+    #[wasm_bindgen(static_method_of = Console, js_class = console, js_name = console, getter = error)]
+    pub fn error() -> js_sys::Function;
 }
 
-pub fn console_log_with_slice(args: &[JsValue]) -> Result<JsValue, JsValue> {
-    Console::log().apply(
-        &JsValue::null(),
-        &js_sys::Array::from_iter(args)
-    )
+pub mod __export {
+    use wasm_bindgen::JsValue;
+    use std::iter::FromIterator;
+
+    pub fn console_log(args: &[JsValue]) -> Result<JsValue, JsValue> {
+        super::Console::log().apply(
+            &JsValue::null(),
+            &js_sys::Array::from_iter(args)
+        )
+    }
+
+    pub fn console_debug(args: &[JsValue]) -> Result<JsValue, JsValue> {
+        super::Console::debug().apply(
+            &JsValue::null(),
+            &js_sys::Array::from_iter(args)
+        )
+    }
+
+    pub fn console_info(args: &[JsValue]) -> Result<JsValue, JsValue> {
+        super::Console::info().apply(
+            &JsValue::null(),
+            &js_sys::Array::from_iter(args)
+        )
+    }
+
+    pub fn console_warn(args: &[JsValue]) -> Result<JsValue, JsValue> {
+        super::Console::warn().apply(
+            &JsValue::null(),
+            &js_sys::Array::from_iter(args)
+        )
+    }
+
+    pub fn console_error(args: &[JsValue]) -> Result<JsValue, JsValue> {
+        super::Console::error().apply(
+            &JsValue::null(),
+            &js_sys::Array::from_iter(args)
+        )
+    }
 }
 
 #[macro_export]
 macro_rules! log {
     ( $( $x:expr ),* ) => {
-        $crate::console_log_with_slice(&[$(
+        $crate::__export::console_log(&[$(
+            Into::<wasm_bindgen::JsValue>::into($x),
+        )*])
+    };
+}
+
+#[macro_export]
+macro_rules! debug {
+    ( $( $x:expr ),* ) => {
+        $crate::__export::console_debug(&[$(
+            Into::<wasm_bindgen::JsValue>::into($x),
+        )*])
+    };
+}
+
+#[macro_export]
+macro_rules! info {
+    ( $( $x:expr ),* ) => {
+        $crate::__export::console_info(&[$(
+            Into::<wasm_bindgen::JsValue>::into($x),
+        )*])
+    };
+}
+
+#[macro_export]
+macro_rules! warn {
+    ( $( $x:expr ),* ) => {
+        $crate::__export::console_warn(&[$(
+            Into::<wasm_bindgen::JsValue>::into($x),
+        )*])
+    };
+}
+
+#[macro_export]
+macro_rules! error {
+    ( $( $x:expr ),* ) => {
+        $crate::__export::console_error(&[$(
             Into::<wasm_bindgen::JsValue>::into($x),
         )*])
     };
