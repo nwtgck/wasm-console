@@ -1,3 +1,14 @@
+use wasm_bindgen::prelude::*;
+use js_sys;
+
+#[wasm_bindgen]
+extern "C" {
+    pub type Console;
+
+    #[wasm_bindgen(variadic, js_namespace = console, js_name = assert)]
+    pub fn console_assert(args: &js_sys::Array);
+}
+
 pub mod __export {
     use wasm_bindgen::JsValue;
     use std::iter::FromIterator;
@@ -22,6 +33,10 @@ pub mod __export {
 
     pub fn console_error(args: &[JsValue]) {
         console::error(&Array::from_iter(args));
+    }
+
+    pub fn console_assert(args: &[JsValue]) {
+        super::console_assert(&Array::from_iter(args));
     }
 }
 
@@ -74,6 +89,15 @@ macro_rules! warn {
 macro_rules! error {
     ( $( $x:expr ),* ) => {
         $crate::__export::console_error(
+            &$crate::__js_value_array!($($x),*)
+        )
+    };
+}
+
+#[macro_export]
+macro_rules! assert {
+    ( $( $x:expr ),* ) => {
+        $crate::__export::console_assert(
             &$crate::__js_value_array!($($x),*)
         )
     };
