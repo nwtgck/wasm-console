@@ -1,0 +1,15 @@
+# (base: https://rustwasm.github.io/wasm-bindgen/wasm-bindgen-test/continuous-integration.html#github-actions)
+name: CI
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
+      - run: wasm-pack test --headless --chrome
+      - run: wasm-pack test --node
