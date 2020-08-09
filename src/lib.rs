@@ -1,63 +1,27 @@
-use wasm_bindgen::prelude::*;
-use js_sys;
-
-#[wasm_bindgen]
-extern "C" {
-    pub type Console;
-
-    #[wasm_bindgen(static_method_of = Console, js_class = console, js_name = console, getter = log)]
-    pub fn log() -> js_sys::Function;
-
-    #[wasm_bindgen(static_method_of = Console, js_class = console, js_name = console, getter = debug)]
-    pub fn debug() -> js_sys::Function;
-
-    #[wasm_bindgen(static_method_of = Console, js_class = console, js_name = console, getter = info)]
-    pub fn info() -> js_sys::Function;
-
-    #[wasm_bindgen(static_method_of = Console, js_class = console, js_name = console, getter = warn)]
-    pub fn warn() -> js_sys::Function;
-
-    #[wasm_bindgen(static_method_of = Console, js_class = console, js_name = console, getter = error)]
-    pub fn error() -> js_sys::Function;
-}
-
 pub mod __export {
     use wasm_bindgen::JsValue;
     use std::iter::FromIterator;
+    use web_sys::console;
+    use js_sys::Array;
 
     pub fn console_log(args: &[JsValue]) {
-        super::Console::log().apply(
-            &JsValue::null(),
-            &js_sys::Array::from_iter(args)
-        ).unwrap();
+        console::log(&Array::from_iter(args));
     }
 
     pub fn console_debug(args: &[JsValue]) {
-        super::Console::debug().apply(
-            &JsValue::null(),
-            &js_sys::Array::from_iter(args)
-        ).unwrap();
+        console::debug(&Array::from_iter(args));
     }
 
     pub fn console_info(args: &[JsValue]) {
-        super::Console::info().apply(
-            &JsValue::null(),
-            &js_sys::Array::from_iter(args)
-        ).unwrap();
+        console::info(&Array::from_iter(args));
     }
 
     pub fn console_warn(args: &[JsValue]) {
-        super::Console::warn().apply(
-            &JsValue::null(),
-            &js_sys::Array::from_iter(args)
-        ).unwrap();
+        console::warn(&Array::from_iter(args));
     }
 
     pub fn console_error(args: &[JsValue]) {
-        super::Console::error().apply(
-            &JsValue::null(),
-            &js_sys::Array::from_iter(args)
-        ).unwrap();
+        console::error(&Array::from_iter(args));
     }
 }
 
