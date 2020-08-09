@@ -62,46 +62,55 @@ pub mod __export {
 }
 
 #[macro_export]
+macro_rules! __js_value_array {
+    ( $( $x:expr ),* ) => {
+        [$(
+            Into::<wasm_bindgen::JsValue>::into($x),
+        )*]
+    };
+}
+
+#[macro_export]
 macro_rules! log {
     ( $( $x:expr ),* ) => {
-        $crate::__export::console_log(&[$(
-            Into::<wasm_bindgen::JsValue>::into($x),
-        )*])
+        $crate::__export::console_log(
+            &$crate::__js_value_array!($($x),*)
+        )
     };
 }
 
 #[macro_export]
 macro_rules! debug {
     ( $( $x:expr ),* ) => {
-        $crate::__export::console_debug(&[$(
-            Into::<wasm_bindgen::JsValue>::into($x),
-        )*])
+        $crate::__export::console_debug(
+            &$crate::__js_value_array!($($x),*)
+        )
     };
 }
 
 #[macro_export]
 macro_rules! info {
     ( $( $x:expr ),* ) => {
-        $crate::__export::console_info(&[$(
-            Into::<wasm_bindgen::JsValue>::into($x),
-        )*])
+        $crate::__export::console_info(
+            &$crate::__js_value_array!($($x),*)
+        )
     };
 }
 
 #[macro_export]
 macro_rules! warn {
     ( $( $x:expr ),* ) => {
-        $crate::__export::console_warn(&[$(
-            Into::<wasm_bindgen::JsValue>::into($x),
-        )*])
+        $crate::__export::console_warn(
+            &$crate::__js_value_array!($($x),*)
+        )
     };
 }
 
 #[macro_export]
 macro_rules! error {
     ( $( $x:expr ),* ) => {
-        $crate::__export::console_error(&[$(
-            Into::<wasm_bindgen::JsValue>::into($x),
-        )*])
+        $crate::__export::console_error(
+            &$crate::__js_value_array!($($x),*)
+        )
     };
 }
