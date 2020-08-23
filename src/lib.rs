@@ -38,6 +38,10 @@ pub mod __export {
     pub fn console_assert(args: &[JsValue]) {
         super::console_assert(&Array::from_iter(args));
     }
+
+    pub fn console_trace(args: &[JsValue]) {
+        console::trace(&Array::from_iter(args));
+    }
 }
 
 #[macro_export]
@@ -98,6 +102,15 @@ macro_rules! error {
 macro_rules! assert {
     ( $( $x:expr ),* ) => {
         $crate::__export::console_assert(
+            &$crate::__js_value_array!($($x),*)
+        )
+    };
+}
+
+#[macro_export]
+macro_rules! trace {
+    ( $( $x:expr ),* ) => {
+        $crate::__export::console_trace(
             &$crate::__js_value_array!($($x),*)
         )
     };
